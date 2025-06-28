@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surendhar's Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <h1>Surendhar R.</h1>
+    <p>Aspiring Web Developer</p>
+    <button id="darkModeToggle">Toggle Dark Mode</button>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am a passionate developer skilled in HTML, CSS, JavaScript, Java, and MySQL. I love building clean and responsive websites.</p>
+    <a href="Surendhar_Resume.pdf" download class="btn"><i class="fas fa-download"></i> Download Resume</a>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Java (Basic)</li>
+      <li>MySQL (Basic)</li>
+    </ul>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <ul>
+      <li>Online Quiz Application (Frontend + Java + MySQL)</li>
+      <li>Student Management System (Java + MySQL)</li>
+      <li>Personal Portfolio Website (This!)</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form action="contact" method="post" onsubmit="return validateForm();">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Surendhar R.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
