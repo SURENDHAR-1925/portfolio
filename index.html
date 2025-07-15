@@ -1,153 +1,145 @@
+<!-- Java Servlet: ContactServlet.java
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/ContactServlet")
+public class ContactServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    // Change these as per your DB config
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/portfolio";
+    private static final String DB_USER = "root";
+    private static final String DB_PASS = "your_password";
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String message = request.getParameter("message");
+
+        Connection con = null;
+        PreparedStatement pst = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            String sql = "INSERT INTO contact (name, email, message) VALUES (?, ?, ?)";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setString(3, message);
+
+            pst.executeUpdate();
+
+            // Redirect to thank you page or portfolio page
+            response.sendRedirect("thankyou.html");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("Error: " + e.getMessage());
+        } finally {
+            try { if (pst != null) pst.close(); } catch (Exception e) {}
+            try { if (con != null) con.close(); } catch (Exception e) {}
+        }
+    }
+}
+
+
+MySQL table
+
+CREATE DATABASE IF NOT EXISTS portfolio;
+USE portfolio;
+
+CREATE TABLE IF NOT EXISTS contact (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+thankyou.html -->
+
+
+
+
+.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dummy Name - Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="script.js" defer></script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-  />
+  <title>Surendhar | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
 </head>
-<body onload="updateProgress()">
-  <header>
-    <nav>
-      <div class="logo" onclick="showAllSections()">Software Engineer</div>
-      <div class="menu-toggle" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
-      </div>
-      <ul id="menu" class="hidden">
-        <li><a href="#about" onclick="showSection('about'); return false;"><i class="fas fa-user"></i> About</a></li>
-        <li><a href="#skills" onclick="showSection('skills'); return false;"><i class="fas fa-cogs"></i> Skills</a></li>
-        <li><a href="#projects" onclick="showSection('projects'); return false;"><i class="fas fa-project-diagram"></i> Projects</a></li>
-        <li><a href="#certifications" onclick="showSection('certifications'); return false;"><i class="fas fa-certificate"></i> Certifications</a></li>
-        <li><a href="#contact" onclick="showSection('contact'); return false;"><i class="fas fa-envelope"></i> Contact</a></li>
+<body>
+  <header class="header">
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#resume" class="nav-link">Resume</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
     </nav>
-    <div class="hero">
-      <h1>Dummy Name</h1>
-      <p>Software Engineer | Java Developer | Web Enthusiast</p>
-      <button onclick="showSection('contact')">Contact Me</button>
-    </div>
   </header>
 
-  <div id="sections-container">
-    <section id="about" class="section">
-      <button class="back-btn" onclick="showAllSections()">← Back</button>
-      <h2>About Me</h2>
-      <p>I am a dedicated Software Engineer specializing in Java, MySQL, and full-stack Web Development, passionate about building scalable and efficient applications.</p>
-    </section>
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Hello, I'm <span>Surendhar</span></h1>
+      <p>Web Developer skilled in HTML, CSS, JavaScript, Java & MySQL.</p>
+      <a href="#projects" class="btn">View Projects</a>
+    </div>
+  </section>
 
-    <section id="skills" class="section">
-      <button class="back-btn" onclick="showAllSections()">← Back</button>
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill">Java</div>
-        <div class="skill">C</div>
-        <div class="skill">MySQL</div>
-        <div class="skill">Figma</div>
-        <div class="skill">Web Development</div>
-        <div class="skill">Git</div>
-      </div>
-    </section>
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <p>I build user-friendly and responsive websites. Currently learning full-stack development and backend integration with Java and MySQL.</p>
+  </section>
 
-    <section id="projects" class="section">
-      <button class="back-btn" onclick="showAllSections()">← Back</button>
-      <h2>Projects</h2>
-      <div class="projects">
-        <div class="project">Project 1 Description</div>
-        <div class="project">Project 2 Description</div>
-        <div class="project">Project 3 Description</div>
-      </div>
-    </section>
+  <section id="skills" class="section">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div><i class="fab fa-html5"></i></div>
+      <div><i class="fab fa-css3-alt"></i></div>
+      <div><i class="fab fa-js"></i></div>
+      <div><i class="fab fa-java"></i></div>
+      <div><i class="fas fa-database"></i></div>
+    </div>
+  </section>
 
-    <section id="certifications" class="section">
-      <button class="back-btn" onclick="showAllSections()">← Back</button>
-      <h2>Certifications</h2>
-      <ul>
-        <li>Java Development Certificate</li>
-        <li>MySQL Database Fundamentals</li>
-        <li>Web Development Bootcamp</li>
-      </ul>
-    </section>
+  <section id="resume" class="section">
+    <h2>Resume</h2>
+    <div class="resume-download">
+      <a href="Surendhar_Resume.pdf" download>Download Resume</a>
+    </div>
+  </section>
 
-    <section id="contact" class="section">
-      <button class="back-btn" onclick="showAllSections()">← Back</button>
-      <h2>Get in Touch</h2>
-      <form id="contactForm" action="ContactServlet" method="post" oninput="updateProgress()">
-        <input type="text" name="name" id="name" placeholder="Your Name" required /><br />
-        <input type="text" name="location" id="location" placeholder="Your City" required /><br />
-        <input type="email" name="email" id="email" placeholder="Your Email" required /><br />
-        <input type="tel" name="phone" id="phone" placeholder="Phone Number" required /><br />
-        <textarea name="message" id="message" placeholder="Tell me what you're looking for..." required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-      <div id="progressContainer">
-        <div id="progressBar"></div>
-      </div>
-    </section>
-  </div>
+  <section id="contact" class="section">
+    <h2>Contact</h2>
+    <form action="ContactServlet" method="post">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
 
   <footer>
-    <p>&copy; 2025 Dummy Name</p>
+    <p>&copy; 2025 Surendhar. All rights reserved.</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-<!--/* ContactServlet.java */-->
-<!--import java.io.IOException;-->
-<!--import java.sql.Connection;-->
-<!--import java.sql.DriverManager;-->
-<!--import java.sql.PreparedStatement;-->
-<!--import javax.servlet.ServletException;-->
-<!--import javax.servlet.annotation.WebServlet;-->
-<!--import javax.servlet.http.HttpServlet;-->
-<!--import javax.servlet.http.HttpServletRequest;-->
-<!--import javax.servlet.http.HttpServletResponse;-->
-
-<!--@WebServlet("/ContactServlet")-->
-<!--public class ContactServlet extends HttpServlet {-->
-
-<!--    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {-->
-<!--        String name = request.getParameter("name");-->
-<!--        String location = request.getParameter("location");-->
-<!--        String email = request.getParameter("email");-->
-<!--        String phone = request.getParameter("phone");-->
-<!--        String message = request.getParameter("message");-->
-
-<!--        try {-->
-<!--            Class.forName("com.mysql.cj.jdbc.Driver");-->
-<!--            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/portfolio", "root", "password");-->
-<!--            String sql = "INSERT INTO contacts (name, location, email, phone, message) VALUES (?, ?, ?, ?, ?)";-->
-<!--            PreparedStatement ps = con.prepareStatement(sql);-->
-<!--            ps.setString(1, name);-->
-<!--            ps.setString(2, location);-->
-<!--            ps.setString(3, email);-->
-<!--            ps.setString(4, phone);-->
-<!--            ps.setString(5, message);-->
-<!--            ps.executeUpdate();-->
-<!--            con.close();-->
-<!--        } catch (Exception e) {-->
-<!--            e.printStackTrace();-->
-<!--        }-->
-<!--        response.sendRedirect("index.html");-->
-<!--    }-->
-<!--}-->
-
-<!--/* MySQL Table Creation */-->
-
-<!--CREATE DATABASE portfolio;-->
-
-<!--USE portfolio;-->
-
-<!--CREATE TABLE contacts (-->
-<!--    id INT AUTO_INCREMENT PRIMARY KEY,-->
-<!--    name VARCHAR(100),-->
-<!--    location VARCHAR(100),-->
-<!--    email VARCHAR(150),-->
-<!--    phone VARCHAR(20),-->
-<!--    message TEXT-->
-<!--);-->

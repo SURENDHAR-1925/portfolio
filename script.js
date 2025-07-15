@@ -1,66 +1,32 @@
-function scrollToContact() {
-  showSection('contact');
-}
+// Scroll-based width expand/contract
+let lastScroll = window.scrollY;
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
 
-function toggleMenu() {
-  const menu = document.getElementById('menu');
-  menu.classList.toggle('hidden');
-}
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const goingUp = scrollTop < lastScroll;
 
-function showSection(id) {
-  const sections = document.querySelectorAll('#sections-container .section');
-  sections.forEach((section) => {
-    section.classList.remove('fullscreen-section');
-    section.style.display = 'none';
+  sections.forEach(section => {
+    section.classList.remove('expand', 'contract');
+    section.classList.add(goingUp ? 'expand' : 'contract');
   });
 
-  const selected = document.getElementById(id);
-  selected.style.display = 'block';
-  selected.classList.add('fullscreen-section');
+  lastScroll = scrollTop;
 
-  document.querySelector('header').style.display = 'none';
-  document.querySelector('footer').style.display = 'none';
-  document.getElementById('menu').classList.add('hidden');
-}
-
-function showAllSections() {
-  const sections = document.querySelectorAll('#sections-container .section');
-  sections.forEach((section) => {
-    section.style.display = 'block';
-    section.classList.remove('fullscreen-section');
+  // Highlight nav link on scroll
+  let currentSection = 'home';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (scrollTop >= sectionTop) {
+      currentSection = section.getAttribute('id');
+    }
   });
 
-  document.querySelector('header').style.display = 'block';
-  document.querySelector('footer').style.display = 'block';
-}
-
-function updateProgress() {
-  const fields = [
-    document.getElementById('name'),
-    document.getElementById('location'),
-    document.getElementById('email'),
-    document.getElementById('phone'),
-    document.getElementById('message'),
-  ];
-
-  let filledCount = 0;
-  fields.forEach((field) => {
-    if (field.value.trim() !== '') filledCount++;
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + currentSection) {
+      link.classList.add('active');
+    }
   });
-
-  const total = fields.length;
-  const percent = (filledCount / total) * 100;
-
-  const progressBar = document.getElementById('progressBar');
-  progressBar.style.width = `${percent}%`;
-
-  if (percent === 100) {
-    progressBar.style.backgroundColor = '#50fa7b';
-  } else if (percent === 0) {
-    progressBar.style.backgroundColor = '#ff5555';
-  } else {
-    const green = Math.floor((percent / 100) * 120) + 50;
-    const red = 255 - green;
-    progressBar.style.backgroundColor = `rgb(${red}, ${green}, 0)`;
-  }
-}
+});
