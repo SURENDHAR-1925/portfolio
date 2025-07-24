@@ -2,6 +2,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         body {
@@ -9,6 +10,7 @@
             line-height: 1.6;
             color: #333;
             overflow-x: hidden;
+            background-color: whitesmoke;
         }
 
         /* Animated gradient background */
@@ -17,6 +19,7 @@
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             min-height: 100vh;
+            max-width: 190vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -81,6 +84,7 @@
 
         /* Navigation */
         nav {
+          font-size: large;
             position: fixed;
             top: 0;
             width: 100%;
@@ -111,12 +115,14 @@
 
         /* Sections */
         section {
+          min-height: 100vh;
             padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         h2 {
+           margin-top: 200px;
             font-size: 3rem;
             text-align: center;
             margin-bottom: 3rem;
@@ -142,6 +148,8 @@
             grid-template-columns: 1fr 2fr;
             gap: 3rem;
             align-items: center;
+
+            
         }
 
         .profile-card {
@@ -151,6 +159,12 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: transform 0.3s ease;
+            min-width: 400px;
+            font-size: 1rem;
+        }
+
+        .profile-card p ,h3{
+          font-size: 25px;
         }
 
         .profile-card:hover {
@@ -173,10 +187,12 @@
 
         .contact-info {
             margin-top: 1rem;
+           
         }
 
         .contact-info p {
             margin: 0.5rem 0;
+            font-size: 25px;  
             color: #666;
         }
 
@@ -216,8 +232,9 @@
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 25px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: transform 0.3s ease;
+            margin-right: 10px;
         }
 
         .skill-tag:hover {
@@ -252,6 +269,7 @@
 
         .project-body {
             padding: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .project-tech {
@@ -259,6 +277,7 @@
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-top: 1rem;
+            font-size: 1.2rem;
         }
 
         .tech-badge {
