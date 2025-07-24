@@ -1,144 +1,177 @@
-<!-- Java Servlet: ContactServlet.java
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-@WebServlet("/ContactServlet")
-public class ContactServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    // Change these as per your DB config
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/portfolio";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "your_password";
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String message = request.getParameter("message");
-
-        Connection con = null;
-        PreparedStatement pst = null;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-
-            String sql = "INSERT INTO contact (name, email, message) VALUES (?, ?, ?)";
-            pst = con.prepareStatement(sql);
-            pst.setString(1, name);
-            pst.setString(2, email);
-            pst.setString(3, message);
-
-            pst.executeUpdate();
-
-            // Redirect to thank you page or portfolio page
-            response.sendRedirect("thankyou.html");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.getWriter().println("Error: " + e.getMessage());
-        } finally {
-            try { if (pst != null) pst.close(); } catch (Exception e) {}
-            try { if (con != null) con.close(); } catch (Exception e) {}
-        }
-    }
-}
-
-
-MySQL table
-
-CREATE DATABASE IF NOT EXISTS portfolio;
-USE portfolio;
-
-CREATE TABLE IF NOT EXISTS contact (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    message TEXT NOT NULL,
-    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-thankyou.html -->
-
-
-
-
-.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Surendhar | Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surendhar R - Full Stack Developer</title>
+   <link rel="stylesheet" href="styles.css" type="text/css" media="all" />
+       
 </head>
 <body>
-  <header class="header">
-    <nav class="nav-bar">
-      <ul>
-        <li><a href="#home" class="nav-link active">Home</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#resume" class="nav-link">Resume</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
-  </header>
 
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h1>Hello, I'm <span>Surendhar</span></h1>
-      <p>Web Developer skilled in HTML, CSS, JavaScript, Java & MySQL.</p>
-      <a href="#projects" class="btn">View Projects</a>
-    </div>
-  </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Surendhar R</h1>
+            <p>Full Stack Developer & Tech Enthusiast</p>
+            <a href="#about" class="cta-button">Discover My Work</a>
+        </div>
+    </section>
 
-  <section id="about" class="section">
-    <h2>About Me</h2>
-    <p>I build user-friendly and responsive websites. Currently learning full-stack development and backend integration with Java and MySQL.</p>
-  </section>
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="profile-card">
+                <div class="profile-img">SR</div>
+                <h3>Surendhar R</h3>
+                <p>Full Stack Developer</p>
+                <div class="contact-info">
+                    <p>📱 95778-35424</p>
+                    <p>📧 surendhar9273@gmail.com</p>
+                    <p>📍 Puliyangudi, Tamil Nadu</p>
+                </div>
+            </div>
+            <div>
+                <p style="font-size: 1.2rem; line-height: 1.8; color: #555;">
+                    Self-motivated and determined fresher seeking an entry-level position to apply 
+                    technical skills in a dynamic work environment, while contributing to the 
+                    company's success. With a strong foundation in web development and a passion 
+                    for creating innovative solutions, I'm ready to bring fresh perspectives and 
+                    dedication to your team.
+                </p>
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;">Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">English - Read/Write/Speak</span>
+                        <span class="skill-tag">Tamil - Read/Write/Speak</span>
+                        <span class="skill-tag">Hindi - Speak</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="skills" class="section">
-    <h2>Skills</h2>
-    <div class="skills-grid">
-      <div><i class="fab fa-html5"></i></div>
-      <div><i class="fab fa-css3-alt"></i></div>
-      <div><i class="fab fa-js"></i></div>
-      <div><i class="fab fa-java"></i></div>
-      <div><i class="fas fa-database"></i></div>
-    </div>
-  </section>
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Technical Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">Java Programming</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">Git & GitHub</span>
+                    <span class="skill-tag">Figma Basics</span>
+                    <span class="skill-tag">Illustrator Basic</span>
+                    <span class="skill-tag">Excel</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Soft Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Teamwork</span>
+                    <span class="skill-tag">Time Management</span>
+                    <span class="skill-tag">Leadership</span>
+                    <span class="skill-tag">Adaptability</span>
+                    <span class="skill-tag">Critical Thinking</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Interests</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Learning New Technologies</span>
+                    <span class="skill-tag">Web Development</span>
+                    <span class="skill-tag">Automotive Enthusiast</span>
+                    <span class="skill-tag">Horticulture</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="resume" class="section">
-    <h2>Resume</h2>
-    <div class="resume-download">
-      <a href="Surendhar_Resume.pdf" download>Download Resume</a>
-    </div>
-  </section>
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Online Shopping for Electronic Products</h3>
+                </div>
+                <div class="project-body">
+                    <p>A comprehensive e-commerce platform with robust user authentication and authorization system. Features include user-friendly product catalog with search and filtering options, and complete shopping cart functionality.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">HTML</span>
+                        <span class="tech-badge">CSS</span>
+                        <span class="tech-badge">MySQL</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>E-commerce Dynamic UI</h3>
+                </div>
+                <div class="project-body">
+                    <p>Modern UI with Dynamic Elements featuring clean and visually appealing design with interactive elements. Built with hover effects and navigation, along with product display and features highlighting.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">HTML</span>
+                        <span class="tech-badge">CSS</span>
+                        <span class="tech-badge">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="contact" class="section">
-    <h2>Contact</h2>
-    <form action="ContactServlet" method="post">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
+    <!-- Education Section -->
+    <section id="education">
+        <h2>Education Journey</h2>
+        <div class="education-timeline">
+            <div class="education-item">
+                <h3>Bachelor of Engineering in Information Technology</h3>
+                <p><strong>Bannari Amman Institute of Technology</strong> • 2022-2026</p>
+                <p>Currently pursuing degree with focus on Information Technology and Communication Engineering</p>
+                <p><strong>CGPA:</strong> 6.8</p>
+            </div>
+            <div class="education-item">
+                <h3>Diploma in Electrical and Electronics Engineering</h3>
+                <p><strong>Nanjail Lingammal Polytechnic College</strong> • 2019-2022</p>
+                <p>Completed diploma with strong foundation in electrical and electronics engineering principles</p>
+                <p><strong>Percentage:</strong> 88%</p>
+            </div>
+            <div class="education-item">
+                <h3>SSLC</h3>
+                <p><strong>SNS Memorial Matric Higher Secondary School</strong> • 2018-2019</p>
+                <p>Completed secondary education with excellent academic performance</p>
+                <p><strong>Percentage:</strong> 67%</p>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>&copy; 2025 Surendhar. All rights reserved.</p>
-  </footer>
+    <!-- Contact Section -->
+    <footer id="contact">
+        <h2 style="color: white;">Get In Touch</h2>
+        <div class="social-links">
+            <a href="https://linkedin.com" class="social-link" title="LinkedIn">in</a>
+            <a href="https://github.com" class="social-link" title="GitHub">GH</a>
+            <a href="mailto:surendhar9273@gmail.com" class="social-link" title="Email">@</a>
+            <a href="tel:9577835424" class="social-link" title="Phone">📞</a>
+        </div>
+        <p>&copy; 2025 Surendhar R. All rights reserved.</p>
+        <p>Ready to contribute to your team's success!</p>
+    </footer>
 
   <script src="script.js"></script>
 </body>
